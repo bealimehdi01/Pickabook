@@ -80,6 +80,11 @@ export default function Home() {
         msg = "Reference Error: Cannot reach the Backend! \n1. Did you set 'NEXT_PUBLIC_API_URL' in Vercel? \n2. Is the Hugging Face Space 'Running'?";
       } else if (err.response?.data?.detail) {
         msg = err.response.data.detail;
+
+        // Custom handling for Quota Error
+        if (typeof msg === 'string' && msg.includes("ZeroGPU quotas")) {
+          msg = "⏳ Magical Recharging Needed! \n\nWe've used up our free magic for the day (ZeroGPU Usage Limit). \nPlease try again in an hour, or check back tomorrow!";
+        }
       }
 
       setError(msg);
