@@ -48,12 +48,14 @@ export default function Home() {
     }
 
     // Generate 3 variants
-    // Use environment variable or default to localhost
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    const response = await axios.post(`${apiBase}/api/generate`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return response.data.image_url;
+    const generateVariant = async () => {
+      // Use environment variable or default to localhost
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${apiBase}/api/generate`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data.image_url;
+    };
   };
 
   try {
