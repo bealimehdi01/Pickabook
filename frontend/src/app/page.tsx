@@ -71,8 +71,18 @@ export default function Home() {
       setStep('result');
 
     } catch (err: any) {
+      console.error("API call failed. Used URL:", process.env.NEXT_PUBLIC_API_URL || "Default: http://localhost:8000");
       console.error(err);
-      setError(err.response?.data?.detail || "Magic spell backfired slightly. Please try again.");
+
+      let msg = "Magic spell backfired slightly. Please try again.";
+      if (!err.response) {
+        // Network error (CORS or unreachable)
+        msg = "Reference Error: Cannot reach the Backend! \n1. Did you set 'NEXT_PUBLIC_API_URL' in Vercel? \n2. Is the Hugging Face Space 'Running'?";
+      } else if (err.response?.data?.detail) {
+        msg = err.response.data.detail;
+      }
+
+      setError(msg);
       setStep('upload');
     }
   }
