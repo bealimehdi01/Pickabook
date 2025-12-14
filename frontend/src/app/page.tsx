@@ -89,6 +89,8 @@ export default function Home() {
 
       setError(msg);
       setStep('upload');
+      // Scroll to top to ensure error is seen
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
@@ -130,14 +132,8 @@ export default function Home() {
           {step === 'upload' && (
             <div className="animate-in fade-in zoom-in duration-500">
 
-              {/* Template Selector */}
-              <TemplateSelector selectedFile={templateFile} onSelect={setTemplateFile} />
-
-              <h3 className="text-lg font-semibold text-slate-700 mb-2">3. Upload Child's Photo (Starts Generation)</h3>
-              <UploadZone onFileSelect={handleFileSelect} />
-
               {error && (
-                <div className="mt-8 p-6 bg-red-50 text-red-900 rounded-2xl border border-red-100 shadow-sm animate-in fade-in slide-in-from-bottom duration-300">
+                <div className="mb-8 p-6 bg-red-50 text-red-900 rounded-2xl border border-red-100 shadow-sm animate-in fade-in slide-in-from-top duration-300">
                   <div className="flex items-start gap-4">
                     <div className="bg-red-100 p-2 rounded-full">
                       <span className="text-xl">⚠️</span>
@@ -157,6 +153,12 @@ export default function Home() {
                   </div>
                 </div>
               )}
+
+              {/* Template Selector */}
+              <TemplateSelector selectedFile={templateFile} onSelect={setTemplateFile} />
+
+              <h3 className="text-lg font-semibold text-slate-700 mb-2">3. Upload Child's Photo (Starts Generation)</h3>
+              <UploadZone onFileSelect={handleFileSelect} />
               <Button variant="ghost" className="mt-6" onClick={() => setStep('landing')}>
                 Cancel
               </Button>
